@@ -1,4 +1,4 @@
-Cucumber Boilerplate
+BrowserStack WebDriverIO Cucumber Boilerplate
 ====================
 
 [![Build Status](https://travis-ci.org/webdriverio/cucumber-boilerplate.svg?branch=master)](https://travis-ci.org/webdriverio/cucumber-boilerplate)

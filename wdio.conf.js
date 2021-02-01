@@ -22,6 +22,13 @@ if (is_parallel_execution)
 else
   specs_folder = ['./src/features/*.feature']
 
+  if(process.env.BROWSERSTACK_BUILD_NAME !== 'undefined') {
+      build_suffix = process.env.BROWSERSTACK_BUILD_NAME;
+  }
+  else {
+    build_suffix = '101';
+  }
+
 exports.config = {
 
   user: process.env.BROWSERSTACK_USERNAME || 'BROWSERSTACK_USERNAME',
@@ -30,7 +37,7 @@ exports.config = {
   maxInstances: 25,
   commonCapabilities: {
    "project" : "WebDriverIO Cucumber BrowserStack Boilerplate",
-   "build" : "WebdriverIO cucumber BrowserStack #12",
+   "build" : "WebdriverIO cucumber BrowserStack - " + process.env.BROWSERSTACK_BUILD_NAME,
    "name": 'parallel_test',
   },
 
@@ -295,5 +302,7 @@ exports.config = {
 
 // Code to support common capabilities
 exports.config.capabilities.forEach(function(caps){
-  for(var i in exports.config.commonCapabilities) caps[i] = caps[i] || exports.config.commonCapabilities[i];
+  for(var i in exports.config.commonCapabilities) {
+    caps[i] = caps[i] || exports.config.commonCapabilities[i];
+  }
 });
