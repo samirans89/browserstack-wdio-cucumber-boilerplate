@@ -29,7 +29,7 @@
     "test": "run-s test:*",
     "test:lint": "eslint 'src/**/*.js' 'test/**/*.js!(setup.js)'",
     "test:unit": "jest --config=jest.json --detectOpenHandles",
-    "test:features": "wdio --max-old-space-size=4096 wdio.BUILD.conf.js --parallel=true",
+    "test:features": "wdio wdio.BUILD.conf.js --parallel=true",
     "wdio": "wdio wdio.conf.js"
   },
   "dependencies": {
