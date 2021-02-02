@@ -26,7 +26,8 @@ config.beforeFeature = () => {
     if (pageTitle !== 'DEMO APP') {
         console.error(`Demo app is not up, found ${pageTitle}`);
         console.log(browser.getPageSource());
-        process.exit(1);
+        //process.exit(1);
+        throw new Error(`Demo app is not up, found ${pageTitle}`);
     }
 };
 

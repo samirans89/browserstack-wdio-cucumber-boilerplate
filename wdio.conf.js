@@ -22,11 +22,11 @@ if (is_parallel_execution)
 else
   specs_folder = ['./src/features/*.feature']
 
-  if(typeof process.env.BROWSERSTACK_BUILD_NAME !== 'undefined') {
+const build_name = process.env.BROWSERSTACK_BUILD_NAME;
+  if (build_name == 'undefined') {
       build_suffix = process.env.BROWSERSTACK_BUILD_NAME;
-  }
-  else {
-    build_suffix = '101';
+  } else {
+    build_suffix = '102';
   }
 
 exports.config = {
@@ -34,15 +34,15 @@ exports.config = {
   user: process.env.BROWSERSTACK_USERNAME || 'BROWSERSTACK_USERNAME',
   key: process.env.BROWSERSTACK_ACCESS_KEY || 'BROWSERSTACK_ACC_KEY',
   specs: specs_folder,
-  maxInstances: 100,
+  maxInstances: 25,
   commonCapabilities: {
    "project" : "WebDriverIO Cucumber BrowserStack Boilerplate",
-   "build" : "WebdriverIO cucumber BrowserStack - " + process.env.BROWSERSTACK_BUILD_NAME,
+   "build" : "WebdriverIO cucumber BrowserStack - " + build_suffix,
    "name": 'parallel_test',
   },
 
   host: 'hub.browserstack.com',
-  execArgv:['--max_old_space_size=256'],
+  execArgv:['--max_old_space_size=4096'],
 
 
     //

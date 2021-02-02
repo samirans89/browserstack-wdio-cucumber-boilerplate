@@ -1,19 +1,19 @@
 {
-  "author": "Christian Bromann <christian@saucelabs.com>",
+  "author": "Samiran Saha",
   "license": "MIT",
-  "name": "cucumber-boilerplate",
-  "version": "2.0.0",
-  "description": "Boilerplate project to run WebdriverIO tests with Cucumber",
-  "homepage": "https://github.com/webdriverio/cucumber-boilerplate",
+  "name": "BrowserStack_NodeJS_Cucumber_boilerplate",
+  "version": "1.0.0",
+  "description": "Boilerplate project to run WebdriverIO tests with Cucumber on BrowserStack",
+  "homepage": "https://github.com/samirans89/browserstack-wdio-cucumber-boilerplate",
   "contributors": [
-    "W. van Kuipers <github@pwnd.nl>"
+    "Samiran Saha <samiran.s89@gmail.com>"
   ],
   "repository": {
     "type": "git",
-    "getUrl": "https://github.com/webdriverio/cucumber-boilerplate.git"
+    "getUrl": "https://github.com/samirans89/browserstack-wdio-cucumber-boilerplate.git"
   },
   "bugs": {
-    "getUrl": "https://github.com/webdriverio/cucumber-boilerplate/issues"
+    "getUrl": "https://github.com/samirans89/browserstack-wdio-cucumber-boilerplate/issues"
   },
   "keywords": [
     "wdio",
@@ -25,7 +25,6 @@
     "selenium"
   ],
   "scripts": {
-    "clean": "read -p \"Are you sure you want to clean the project? [y/n] \" REPLY; if [[ $REPLY =~ ^[Yy]$ ]]; then rm -R .git .github demo-app test .codeclimate.yml .travis.yml jest.json wdio.BUILD.conf.js src/features/**; fi",
     "test": "run-s test:*",
     "test:lint": "eslint 'src/**/*.js' 'test/**/*.js!(setup.js)'",
     "test:unit": "jest --config=jest.json --detectOpenHandles",
@@ -35,12 +34,16 @@
   "dependencies": {
     "@wdio/browserstack-service": "^6.12.1",
     "browserstack-local": "^1.4.8",
+    "canvas": "^2.6.1",
     "chalk": "^4.1.0",
+    "chromedriver": "^88.0.0",
     "cucumber-html-reporter": "^5.3.0",
     "fs-extra": "^9.1.0",
     "glob": "^7.1.6",
     "node-emoji": "^1.10.0",
-    "random": "^2.2.0"
+    "random": "^2.2.0",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -49,27 +52,30 @@
     "@babel/preset-env": "^7.9.0",
     "@babel/register": "^7.9.0",
     "@types/cucumber": "^6.0.1",
-    "@wdio/cli": "^6.0.8",
-    "@wdio/config": "^6.0.8",
-    "@wdio/cucumber-framework": "^6.0.8",
+    "@wdio/cli": "^6.12.1",
+    "@wdio/config": "^6.12.1",
+    "@wdio/cucumber-framework": "^6.11.1",
     "@wdio/dot-reporter": "^6.11.0",
-    "@wdio/local-runner": "^6.0.8",
+    "@wdio/local-runner": "^6.12.1",
     "@wdio/selenium-standalone-service": "^6.0.8",
-    "@wdio/spec-reporter": "^6.0.8",
+    "@wdio/spec-reporter": "^6.11.0",
     "@wdio/static-server-service": "^6.10.10",
-    "@wdio/sync": "^6.0.8",
+    "@wdio/sync": "^6.11.0",
     "babel-jest": "^26.0.1",
-    "chromedriver": "^85.0.1",
-    "eslint": "^7.14.0",
-    "eslint-config-airbnb-base": "^14.1.0",
-    "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-wdio": "^6.0.8",
-    "http-server": "^0.12.1",
-    "jest": "^26.2.2",
+    "eslint": "^7.19.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-wdio": "^6.6.0",
+    "http-server": "^0.12.3",
+    "jest": "^26.6.3",
     "npm-run-all": "^4.1.5",
-    "wdio-chromedriver-service": "^6.0.3",
+    "wdio-chromedriver-service": "^6.0.4",
     "wdio-cucumber-parallel-execution": "^3.6.14",
     "wdio-cucumberjs-json-reporter": "^2.0.2",
-    "webdriverio": "^6.0.8"
+    "webdriverio": "^6.12.1"
+  },
+  "optionalDependencies": {
+    "bufferutil": "^4.0.3",
+    "utf-8-validate": "^5.0.4"
   }
 }
