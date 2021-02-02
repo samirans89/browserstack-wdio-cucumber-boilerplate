@@ -34,7 +34,7 @@ exports.config = {
   user: process.env.BROWSERSTACK_USERNAME || 'BROWSERSTACK_USERNAME',
   key: process.env.BROWSERSTACK_ACCESS_KEY || 'BROWSERSTACK_ACC_KEY',
   specs: specs_folder,
-  maxInstances: 25,
+  maxInstances: 75,
   commonCapabilities: {
    "project" : "WebDriverIO Cucumber BrowserStack Boilerplate",
    "build" : "WebdriverIO cucumber BrowserStack - " + build_suffix,
