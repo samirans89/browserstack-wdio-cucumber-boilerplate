@@ -24,14 +24,14 @@ const build_name = process.env.BROWSERSTACK_BUILD_NAME;
 if (build_name == "undefined") {
     build_suffix = process.env.BROWSERSTACK_BUILD_NAME;
 } else {
-    build_suffix = "1003-70";
+    build_suffix = "1003-65";
 }
 
 exports.config = {
     user: process.env.BROWSERSTACK_USERNAME || "BROWSERSTACK_USERNAME",
     key: process.env.BROWSERSTACK_ACCESS_KEY || "BROWSERSTACK_ACC_KEY",
     specs: specs_folder,
-    maxInstances: 70,
+    maxInstances: 65,
     commonCapabilities: {
         project: "WebDriverIO Cucumber BrowserStack Boilerplate",
         build: "WebdriverIO cucumber BrowserStack - " + build_suffix,
