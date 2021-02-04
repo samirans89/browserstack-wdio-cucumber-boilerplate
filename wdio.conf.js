@@ -24,7 +24,7 @@ const build_name = process.env.BROWSERSTACK_BUILD_NAME;
 if (build_name == "undefined") {
     build_suffix = process.env.BROWSERSTACK_BUILD_NAME;
 } else {
-    build_suffix = "1003-65";
+    build_suffix = "1003-75-250";
 }
 
 exports.config = {
@@ -251,7 +251,7 @@ exports.config = {
         return new Promise(function (resolve, reject) {
             exports.bs_local = new browserstack.Local();
             exports.bs_local.start(
-                { key: exports.config.key, "--parallel-runs": 500 },
+                { key: exports.config.key, "--parallel-runs": 250 },
                 function (error) {
                     if (error) return reject(error);
 
