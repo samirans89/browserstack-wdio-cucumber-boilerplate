@@ -24,7 +24,7 @@ const build_name = process.env.BROWSERSTACK_BUILD_NAME;
 if (build_name == "undefined") {
     build_suffix = process.env.BROWSERSTACK_BUILD_NAME;
 } else {
-    build_suffix = "102";
+    build_suffix = "103";
 }
 
 exports.config = {
