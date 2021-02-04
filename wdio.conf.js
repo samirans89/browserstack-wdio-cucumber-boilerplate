@@ -24,14 +24,14 @@ const build_name = process.env.BROWSERSTACK_BUILD_NAME;
 if (build_name == "undefined") {
     build_suffix = process.env.BROWSERSTACK_BUILD_NAME;
 } else {
-    build_suffix = "103";
+    build_suffix = "1003-70";
 }
 
 exports.config = {
     user: process.env.BROWSERSTACK_USERNAME || "BROWSERSTACK_USERNAME",
     key: process.env.BROWSERSTACK_ACCESS_KEY || "BROWSERSTACK_ACC_KEY",
     specs: specs_folder,
-    maxInstances: 75,
+    maxInstances: 70,
     commonCapabilities: {
         project: "WebDriverIO Cucumber BrowserStack Boilerplate",
         build: "WebdriverIO cucumber BrowserStack - " + build_suffix,
@@ -251,7 +251,7 @@ exports.config = {
         return new Promise(function (resolve, reject) {
             exports.bs_local = new browserstack.Local();
             exports.bs_local.start(
-                { key: exports.config.key, "--parallel-runs": 400 },
+                { key: exports.config.key, "--parallel-runs": 500 },
                 function (error) {
                     if (error) return reject(error);
 
