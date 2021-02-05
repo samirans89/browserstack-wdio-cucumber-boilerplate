@@ -26,15 +26,16 @@ const build_name = process.env.BROWSERSTACK_BUILD_NAME;
   if (build_name == 'undefined') {
       build_suffix = process.env.BROWSERSTACK_BUILD_NAME;
   } else {
-    build_suffix = '102';
+    build_suffix = 'GA - 75 p - 75 p for local';
   }
 
+parallel_count = 75
 exports.config = {
 
   user: process.env.BROWSERSTACK_USERNAME || 'BROWSERSTACK_USERNAME',
   key: process.env.BROWSERSTACK_ACCESS_KEY || 'BROWSERSTACK_ACC_KEY',
   specs: specs_folder,
-  maxInstances: 75,
+  maxInstances: parallel_count,
   commonCapabilities: {
    "project" : "WebDriverIO Cucumber BrowserStack Boilerplate",
    "build" : "WebdriverIO cucumber BrowserStack - " + build_suffix,
@@ -42,7 +43,7 @@ exports.config = {
   },
 
   host: 'hub.browserstack.com',
-  execArgv:['--max_old_space_size=4096'],
+  //execArgv:['--max_old_space_size=4096'],
 
 
     //
@@ -246,7 +247,7 @@ exports.config = {
    console.log("Connecting local");
    return new Promise(function (resolve, reject) {
      exports.bs_local = new browserstack.Local();
-     exports.bs_local.start({ 'key': exports.config.key }, function (error) {
+     exports.bs_local.start({ 'key': exports.config.key, '--parallel-runs': parallel_count}, function (error) {
        if (error) return reject(error);
 
        console.log('Connected. Now testing...');
