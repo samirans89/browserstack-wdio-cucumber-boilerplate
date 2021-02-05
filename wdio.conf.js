@@ -3,6 +3,8 @@ const wdioParallel = require('wdio-cucumber-parallel-execution');
 const argv = require("yargs").argv;
 const fs = require('fs-extra')
 const { hooks } = require('./src/support/hooks');
+const { exec } = require('child_process');
+
 
 // The below module is used for cucumber html report generation
 const reporter = require('cucumber-html-reporter');
@@ -22,14 +24,16 @@ if (is_parallel_execution)
 else
   specs_folder = ['./src/features/*.feature']
 
+parallel_count = 75
+max_old_space_size = ['--max_old_space_size=4096']
+
 const build_name = process.env.BROWSERSTACK_BUILD_NAME;
   if (build_name == 'undefined') {
       build_suffix = process.env.BROWSERSTACK_BUILD_NAME;
   } else {
-    build_suffix = 'GA - 75 p - 75 p for local';
+    build_suffix = parallel_count + ' p - ' + parallel_count + ' p for local - ' + max_old_space_size;
   }
 
-parallel_count = 75
 exports.config = {
 
   user: process.env.BROWSERSTACK_USERNAME || 'BROWSERSTACK_USERNAME',
@@ -43,7 +47,7 @@ exports.config = {
   },
 
   host: 'hub.browserstack.com',
-  //execArgv:['--max_old_space_size=4096'],
+  execArgv: old_heap_size,
 
 
     //
@@ -251,6 +255,15 @@ exports.config = {
        if (error) return reject(error);
 
        console.log('Connected. Now testing...');
+
+       var yourscript = exec('sh running_local_binary_processes.sh',
+               (error, stdout, stderr) => {
+                   console.log(stdout);
+                   console.log(stderr);
+                   if (error !== null) {
+                       console.log(`exec error: ${error}`);
+                   }
+               });
        resolve();
      });
    });
