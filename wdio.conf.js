@@ -47,7 +47,7 @@ exports.config = {
   },
 
   host: 'hub.browserstack.com',
-  execArgv: old_heap_size,
+  execArgv: max_old_space_size,
 
 
     //
