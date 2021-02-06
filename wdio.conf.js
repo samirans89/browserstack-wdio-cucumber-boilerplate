@@ -255,7 +255,7 @@ exports.config = {
             exports.bs_local = new browserstack.Local();
             exports.bs_local.start({
                 'key': exports.config.key,
-                '--parallel-runs': exports.config.maxInstances
+                //'--parallel-runs': exports.config.maxInstances
             }, function(error) {
                 if (error) {
                     console.log("Error:" + error);
