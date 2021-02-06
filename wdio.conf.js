@@ -2,9 +2,12 @@ const path = require('path');
 const wdioParallel = require('wdio-cucumber-parallel-execution');
 const argv = require("yargs").argv;
 const fs = require('fs-extra')
-const { hooks } = require('./src/support/hooks');
-const { exec } = require('child_process');
-
+const {
+    hooks
+} = require('./src/support/hooks');
+const {
+    exec
+} = require('child_process');
 
 // The below module is used for cucumber html report generation
 const reporter = require('cucumber-html-reporter');
@@ -20,34 +23,35 @@ const is_parallel_execution = (argv.parallel === 'true')
 
 let specs_folder = []
 if (is_parallel_execution)
-  specs_folder = ['./src/features/tmp/*.feature']
+    specs_folder = ['./src/features/tmp/*.feature']
 else
-  specs_folder = ['./src/features/*.feature']
+    specs_folder = ['./src/features/*.feature']
 
-parallel_count = 75
-max_old_space_size = ['--max_old_space_size=4096']
-
+max_old_space_size = [] //'--max_old_space_size=2048']
+parallel_count = 25
 const build_name = process.env.BROWSERSTACK_BUILD_NAME;
-  if (build_name == 'undefined') {
-      build_suffix = process.env.BROWSERSTACK_BUILD_NAME;
-  } else {
-    build_suffix = parallel_count + ' p - ' + parallel_count + ' p for local - ' + max_old_space_size;
-  }
+if (build_name == 'undefined') {
+    build_suffix = process.env.BROWSERSTACK_BUILD_NAME + currentTime;
+} else {
+    build_suffix = currentTime + parallel_count + ' p - ' + parallel_count + ' p for local - ' + max_old_space_size;
+}
+
+
 
 exports.config = {
 
-  user: process.env.BROWSERSTACK_USERNAME || 'BROWSERSTACK_USERNAME',
-  key: process.env.BROWSERSTACK_ACCESS_KEY || 'BROWSERSTACK_ACC_KEY',
-  specs: specs_folder,
-  maxInstances: parallel_count,
-  commonCapabilities: {
-   "project" : "WebDriverIO Cucumber BrowserStack Boilerplate",
-   "build" : "WebdriverIO cucumber BrowserStack - " + build_suffix,
-   "name": 'parallel_test',
-  },
+    user: process.env.BROWSERSTACK_USERNAME || 'BROWSERSTACK_USERNAME',
+    key: process.env.BROWSERSTACK_ACCESS_KEY || 'BROWSERSTACK_ACC_KEY',
+    specs: specs_folder,
+    maxInstances: parallel_count,
+    commonCapabilities: {
+        "project": "WebDriverIO Cucumber BrowserStack Boilerplate",
+        "build": "WebdriverIO cucumber BrowserStack - " + build_suffix,
+        "name": 'parallel_test',
+    },
 
-  host: 'hub.browserstack.com',
-  execArgv: max_old_space_size,
+    host: 'hub.browserstack.com',
+    execArgv: max_old_space_size,
 
 
     //
@@ -86,33 +90,31 @@ exports.config = {
     // https://docs.saucelabs.com/reference/platforms-configurator
     //
     capabilities: [{
-      "os" : "Windows",
-      "os_version" : "10",
-      "browserName" : "Chrome",
-      "browser_version" : "latest",
-      "browserstack.local" : "true",
-      }, {
-        "os" : "Windows",
-        "os_version" : "10",
-        "browserName" : "Firefox",
-        "browser_version" : "latest",
-        "browserstack.local" : "true",
-      }, {
-        "os" : "Windows",
-        "os_version" : "10",
-        "browserName" : "Edge",
-        "browser_version" : "latest",
-        "browserstack.local" : "true",
-        "browserstack.chrome.driver": "88.0.705.50",
-      }
-      , {
-        "os" : "OS X",
-        "os_version" : "Catalina",
-        "browserName" : "Safari",
-        "browser_version" : "13.0",
-        "browserstack.local" : "true",
-        }
-    ],
+        "os": "Windows",
+        "os_version": "10",
+        "browserName": "Chrome",
+        "browser_version": "latest",
+        "browserstack.local": "true",
+    }, {
+        "os": "Windows",
+        "os_version": "10",
+        "browserName": "Firefox",
+        "browser_version": "latest",
+        "browserstack.local": "true",
+    }, {
+        "os": "Windows",
+        "os_version": "10",
+        "browserName": "Edge",
+        "browser_version": "latest",
+        "browserstack.local": "true",
+        "browserstack.chrome.driver": "88.0.705.50"
+    }, {
+        "os": "OS X",
+        "os_version": "Catalina",
+        "browserName": "Safari",
+        "browser_version": "13.0",
+        "browserstack.local": "true"
+    }],
     //
     // ===================
     // Test Configurations
@@ -181,11 +183,10 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter.html
-    reporters: ['dot',   [ 'cucumberjs-json', {
-                jsonFolder: './report/',
-                language: 'en',
-            },
-        ]],
+    reporters: ['dot', ['cucumberjs-json', {
+        jsonFolder: './report/',
+        language: 'en',
+    }, ]],
     //
     // If you are using Cucumber you need to specify the location of your step definitions.
     cucumberOpts: {
@@ -234,90 +235,100 @@ exports.config = {
         timeout: 60000,
     },
     // Code to start browserstack local before start of test
- onPrepare: function (config, capabilities) {
-   fs.removeSync(parallelExecutionReportDirectory);
-   // If parallel execution is set to true, then create the Split the feature files
-   // And store then in a tmp spec directory (created inside `the source spec directory)
-   if (is_parallel_execution) {
-       wdioParallel.performSetup({
-           sourceSpecDirectory: sourceSpecDirectory,
-           tmpSpecDirectory: tmpSpecDirectory,
-           cleanTmpSpecDirectory: true
-       });
-   } else {
-     fs.removeSync(tmpSpecDirectory);
-   }
+    onPrepare: function(config, capabilities) {
+        fs.removeSync(parallelExecutionReportDirectory);
+        // If parallel execution is set to true, then create the Split the feature files
+        // And store then in a tmp spec directory (created inside `the source spec directory)
+        if (is_parallel_execution) {
+            wdioParallel.performSetup({
+                sourceSpecDirectory: sourceSpecDirectory,
+                tmpSpecDirectory: tmpSpecDirectory,
+                cleanTmpSpecDirectory: true
+            });
+        } else {
+            fs.removeSync(tmpSpecDirectory);
+        }
 
-   console.log("Connecting local");
-   return new Promise(function (resolve, reject) {
-     exports.bs_local = new browserstack.Local();
-     exports.bs_local.start({ 'key': exports.config.key, '--parallel-runs': parallel_count}, function (error) {
-       if (error) return reject(error);
+        console.log("Connecting local");
+        return new Promise(function(resolve, reject) {
+            exports.bs_local = new browserstack.Local();
+            exports.bs_local.start({
+                'key': exports.config.key,
+                //'--parallel-runs': exports.config.maxInstances
+            }, function(error) {
+                if (error) {
+                    console.log("Error:" + error);
+                    return reject(error);
+                }
+                console.log('Connected. Now testing...');
 
-       console.log('Connected. Now testing...');
+                // exec('sh running_local_binary_processes.sh',
+                //           (error, stdout, stderr) => {
+                //               console.log(stdout);
+                //               console.log(stderr);
+                //               if (error !== null) {
+                //                   console.log(`exec error: ${error}`);
+                //               }
+                //           });
+                resolve();
 
-       var yourscript = exec('sh running_local_binary_processes.sh',
-               (error, stdout, stderr) => {
-                   console.log(stdout);
-                   console.log(stderr);
-                   if (error !== null) {
-                       console.log(`exec error: ${error}`);
-                   }
-               });
-       resolve();
-     });
-   });
+            });
 
 
- },
-  beforeSession: function (config, capabilities, specs) {
-
-    browser.maximizeWindow();
-  },
-
-  afterSession: function (config, capabilities, specs) {
-
-   },
-
- // Code to stop browserstack local after end of test
- onComplete: function (capabilties, specs) {
-
-   try{
-          let consolidatedJsonArray = wdioParallel.getConsolidatedData({
-              parallelExecutionReportDirectory: parallelExecutionReportDirectory
-          });
-
-          let jsonFile = `${parallelExecutionReportDirectory}report.json`;
-          fs.writeFileSync(jsonFile, JSON.stringify(consolidatedJsonArray));
-
-          var options = {
-              theme: 'bootstrap',
-              jsonFile: jsonFile,
-              output: `tests/reports/html/report-${currentTime}.html`,
-              reportSuiteAsScenarios: true,
-              scenarioTimestamp: true,
-              launchReport: true,
-              ignoreBadJsonFile: true
-          };
-
-          reporter.generate(options);
-      } catch(err){
-          console.log('err', err);
-      }
-
-      return new Promise(function(resolve, reject){
-        exports.bs_local.stop(function() {
-          console.log("Binary stopped");
-          resolve();
         });
-      });
- }
+
+
+
+    },
+    beforeSession: function(config, capabilities, specs) {
+
+        browser.maximizeWindow();
+    },
+
+    afterSession: function(config, capabilities, specs) {
+
+    },
+
+    // Code to stop browserstack local after end of test
+    onComplete: function(capabilties, specs) {
+
+        try {
+            let consolidatedJsonArray = wdioParallel.getConsolidatedData({
+                parallelExecutionReportDirectory: parallelExecutionReportDirectory
+            });
+
+            let jsonFile = `${parallelExecutionReportDirectory}report.json`;
+            fs.writeFileSync(jsonFile, JSON.stringify(consolidatedJsonArray));
+
+            var options = {
+                theme: 'bootstrap',
+                jsonFile: jsonFile,
+                output: `tests/reports/html/report-${currentTime}.html`,
+                reportSuiteAsScenarios: true,
+                scenarioTimestamp: true,
+                launchReport: true,
+                ignoreBadJsonFile: true
+            };
+
+            reporter.generate(options);
+        } catch (err) {
+            console.log('err', err);
+        }
+
+        return new Promise(function(resolve, reject) {
+            exports.bs_local.stop(function() {
+                console.log("Binary stopped");
+                resolve();
+            });
+        });
+
+    }
 
 };
 
 // Code to support common capabilities
-exports.config.capabilities.forEach(function(caps){
-  for(var i in exports.config.commonCapabilities) {
-    caps[i] = caps[i] || exports.config.commonCapabilities[i];
-  }
+exports.config.capabilities.forEach(function(caps) {
+    for (var i in exports.config.commonCapabilities) {
+        caps[i] = caps[i] || exports.config.commonCapabilities[i];
+    }
 });

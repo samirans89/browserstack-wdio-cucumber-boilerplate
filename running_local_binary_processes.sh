@@ -1,1 +1,1 @@
-ps aux | grep [B]rowserStackLocal | awk '{print $2}'
+ps aux | grep [B]rowserStackLocal
