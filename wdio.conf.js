@@ -8,7 +8,6 @@ const {
 const {
     exec
 } = require('child_process');
-var sleep = require('sleep');
 
 // The below module is used for cucumber html report generation
 const reporter = require('cucumber-html-reporter');
@@ -29,7 +28,7 @@ else
     specs_folder = ['./src/features/*.feature']
 
 max_old_space_size = [] //'--max_old_space_size=2048']
-parallel_count = 75
+parallel_count = 50
 const build_name = process.env.BROWSERSTACK_BUILD_NAME;
 if (build_name == 'undefined') {
     build_suffix = process.env.BROWSERSTACK_BUILD_NAME + currentTime;
