@@ -4,7 +4,7 @@ const argv = require("yargs").argv;
 const fs = require('fs-extra')
 const { hooks } = require('./src/support/hooks');
 const { exec } = require('child_process');
-
+var sleep = require('sleep');
 
 // The below module is used for cucumber html report generation
 const reporter = require('cucumber-html-reporter');
@@ -275,6 +275,7 @@ exports.config = {
             resolve();
 
        });
+       sleep.sleep(3);
      }
 
 
