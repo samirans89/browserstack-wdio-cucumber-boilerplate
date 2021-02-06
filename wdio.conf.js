@@ -25,13 +25,13 @@ else
   specs_folder = ['./src/features/*.feature']
 
 parallel_count = 75
-max_old_space_size = ['--max_old_space_size=4096']
+max_old_space_size = ['--max_old_space_size=2048']
 
 const build_name = process.env.BROWSERSTACK_BUILD_NAME;
   if (build_name == 'undefined') {
-      build_suffix = process.env.BROWSERSTACK_BUILD_NAME;
+      build_suffix = process.env.BROWSERSTACK_BUILD_NAME + currentTime;
   } else {
-    build_suffix = parallel_count + ' p - ' + parallel_count + ' p for local - ' + max_old_space_size;
+    build_suffix = currentTime + parallel_count + ' p - ' + parallel_count + ' p for local - ' + max_old_space_size;
   }
 
 exports.config = {
@@ -91,12 +91,14 @@ exports.config = {
       "browserName" : "Chrome",
       "browser_version" : "latest",
       "browserstack.local" : "true",
+      "browserstack.localIdentifier" : "1"
       }, {
         "os" : "Windows",
         "os_version" : "10",
         "browserName" : "Firefox",
         "browser_version" : "latest",
         "browserstack.local" : "true",
+        "browserstack.localIdentifier" : "2"
       }, {
         "os" : "Windows",
         "os_version" : "10",
@@ -104,6 +106,7 @@ exports.config = {
         "browser_version" : "latest",
         "browserstack.local" : "true",
         "browserstack.chrome.driver": "88.0.705.50",
+        "browserstack.localIdentifier" : "3"
       }
       , {
         "os" : "OS X",
@@ -111,6 +114,7 @@ exports.config = {
         "browserName" : "Safari",
         "browser_version" : "13.0",
         "browserstack.local" : "true",
+        "browserstack.localIdentifier" : "4"
         }
     ],
     //
@@ -251,22 +255,34 @@ exports.config = {
    console.log("Connecting local");
    return new Promise(function (resolve, reject) {
      exports.bs_local = new browserstack.Local();
-     exports.bs_local.start({ 'key': exports.config.key, '--parallel-runs': parallel_count}, function (error) {
-       if (error) return reject(error);
+     const localIds = [ '1', '2', '3', '4'];
+     for(var localId of localIds) {
+       console.log(localId)
+       exports.bs_local.start({ 'key': exports.config.key, 'localIdentifier': localId }, function (error) {
+         if (error) {
+           console.log("Error:" + error);
+           return reject(error);
+         }
 
-       console.log('Connected. Now testing...');
+         console.log('Connected. Now testing...');
+         exec('sh running_local_binary_processes.sh',
+                 (error, stdout, stderr) => {
+                     console.log(stdout);
+                     console.log(stderr);
+                     if (error !== null) {
+                         console.log(`exec error: ${error}`);
+                     }
+                 });
+         resolve();
 
-       var yourscript = exec('sh running_local_binary_processes.sh',
-               (error, stdout, stderr) => {
-                   console.log(stdout);
-                   console.log(stderr);
-                   if (error !== null) {
-                       console.log(`exec error: ${error}`);
-                   }
-               });
-       resolve();
-     });
+       });
+     }
+
+
+
+
    });
+
 
 
  },
@@ -311,6 +327,7 @@ exports.config = {
           resolve();
         });
       });
+
  }
 
 };
