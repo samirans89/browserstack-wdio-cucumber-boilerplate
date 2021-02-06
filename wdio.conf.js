@@ -25,7 +25,7 @@ else
   specs_folder = ['./src/features/*.feature']
 
 parallel_count = 75
-max_old_space_size = ['--max_old_space_size=2048']
+max_old_space_size = [] //'--max_old_space_size=2048']
 
 const build_name = process.env.BROWSERSTACK_BUILD_NAME;
   if (build_name == 'undefined') {
@@ -275,7 +275,7 @@ exports.config = {
             resolve();
 
        });
-       sleep.sleep(3);
+       sleep.sleep(5);
      }
 
 
