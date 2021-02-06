@@ -257,28 +257,25 @@ exports.config = {
      exports.bs_local = new browserstack.Local();
      const localIds = [ '1', '2', '3', '4'];
      for(var localId of localIds) {
-       console.log(localId)
-       exports.bs_local.start({ 'key': exports.config.key, 'localIdentifier': localId }, function (error) {
-         if (error) {
-           console.log("Error:" + error);
-           return reject(error);
-         }
+         exports.bs_local.start({ 'key': exports.config.key, 'localIdentifier': localId }, function (error) {
+           if (error) {
+             console.log("Error:" + error);
+             return reject(error);
+           }
+           console.log('Connected. Now testing...');
 
-         console.log('Connected. Now testing...');
-         exec('sh running_local_binary_processes.sh',
-                 (error, stdout, stderr) => {
-                     console.log(stdout);
-                     console.log(stderr);
-                     if (error !== null) {
-                         console.log(`exec error: ${error}`);
-                     }
-                 });
-         resolve();
+         // exec('sh running_local_binary_processes.sh',
+         //           (error, stdout, stderr) => {
+         //               console.log(stdout);
+         //               console.log(stderr);
+         //               if (error !== null) {
+         //                   console.log(`exec error: ${error}`);
+         //               }
+         //           });
+            resolve();
 
        });
      }
-
-
 
 
    });
