@@ -94,26 +94,26 @@ exports.config = {
         "os_version": "10",
         "browserName": "Chrome",
         "browser_version": "latest",
-        "browserstack.local": "true",
+    //    "browserstack.local": "true",
     }, {
         "os": "Windows",
         "os_version": "10",
         "browserName": "Firefox",
         "browser_version": "latest",
-        "browserstack.local": "true",
+      //  "browserstack.local": "true",
     }, {
         "os": "Windows",
         "os_version": "10",
         "browserName": "Edge",
         "browser_version": "latest",
-        "browserstack.local": "true",
+    //    "browserstack.local": "true",
         "browserstack.chrome.driver": "88.0.705.50"
     }, {
         "os": "OS X",
         "os_version": "Catalina",
         "browserName": "Safari",
         "browser_version": "13.0",
-        "browserstack.local": "true"
+      //  "browserstack.local": "true"
     }],
     //
     // ===================
@@ -148,7 +148,7 @@ exports.config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: 'http://localhost:8082',
+    baseUrl: 'https://samirans89.github.io/',
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 30000,
@@ -248,7 +248,7 @@ exports.config = {
         } else {
             fs.removeSync(tmpSpecDirectory);
         }
-
+/*
         console.log("Connecting local");
         return new Promise(function(resolve, reject) {
             exports.bs_local = new browserstack.Local();
@@ -276,6 +276,7 @@ exports.config = {
 
 
         });
+        */
 
 
 
@@ -314,13 +315,15 @@ exports.config = {
         } catch (err) {
             console.log('err', err);
         }
-
+/*
         return new Promise(function(resolve, reject) {
             exports.bs_local.stop(function() {
                 console.log("Binary stopped");
                 resolve();
             });
         });
+
+  */
 
     }
 
