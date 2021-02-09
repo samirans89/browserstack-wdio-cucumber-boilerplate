@@ -28,7 +28,7 @@ else
     specs_folder = ['./src/features/*.feature']
 
 max_old_space_size = [] //'--max_old_space_size=2048']
-parallel_count = 25
+parallel_count = 75
 const build_name = process.env.BROWSERSTACK_BUILD_NAME;
 if (build_name == 'undefined') {
     build_suffix = process.env.BROWSERSTACK_BUILD_NAME + currentTime;
@@ -46,7 +46,7 @@ exports.config = {
     maxInstances: parallel_count,
     commonCapabilities: {
         "project": "WebDriverIO Cucumber BrowserStack Boilerplate",
-        "build": "WebdriverIO cucumber BrowserStack - " + build_suffix,
+        "build": "Public app - WebdriverIO cucumber BrowserStack - " + build_suffix,
         "name": 'parallel_test',
     },
 
