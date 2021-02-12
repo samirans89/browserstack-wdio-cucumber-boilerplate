@@ -24,4 +24,4 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm install
-    - run: wdio wdio.BUILD.conf.js --parallel=true
+    - run: ./node_modules/.bin/wdio wdio.BUILD.conf.js --parallel=true
