@@ -28,7 +28,7 @@ else
     specs_folder = ['./src/features/*.feature']
 
 max_old_space_size = [] //'--max_old_space_size=2048']
-parallel_count = 25
+parallel_count = 40
 const build_name = process.env.BROWSERSTACK_BUILD_NAME;
 if (build_name == 'undefined') {
     build_suffix = process.env.BROWSERSTACK_BUILD_NAME + currentTime;
