@@ -29,6 +29,15 @@ config.beforeFeature = () => {
         //process.exit(1);
         throw new Error(`Demo app is not up, found ${pageTitle}`);
     }
+
+    var yourscript = exec('sh running_local_binary_processes.sh',
+            (error, stdout, stderr) => {
+                console.log(stdout);
+                console.log(stderr);
+                if (error !== null) {
+                    console.log(`exec error: ${error}`);
+                }
+            });
 };
 
 if (process.env.CI) {

@@ -24,7 +24,7 @@ if (is_parallel_execution)
 else
   specs_folder = ['./src/features/*.feature']
 
-parallel_count = 75
+parallel_count = 25
 max_old_space_size = ['--max_old_space_size=4096']
 
 const build_name = process.env.BROWSERSTACK_BUILD_NAME;
